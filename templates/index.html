@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Now Screening — Movie Recommender</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="marquee-frame">
+    <div class="bulb-row" aria-hidden="true"></div>
+
+    <main class="house">
+
+      <header class="hero">
+        <p class="showtime">Tonight's showing</p>
+        <h1 class="hero-title">Find your next<br>favorite film</h1>
+        <p class="hero-sub">Tell us one movie you loved. We'll pull five more from the same reel.</p>
+
+        <form class="ticket-window" id="search-form" autocomplete="off">
+          <label class="visually-hidden" for="movie-input">Movie title</label>
+          <input
+            id="movie-input"
+            name="movie"
+            type="text"
+            placeholder="e.g. Batman Begins"
+            required
+          >
+          <button type="submit" id="search-btn">
+            <span class="btn-label">Get recommendations</span>
+          </button>
+        </form>
+
+        <div class="try-row">
+          <span>Try:</span>
+          <button type="button" class="chip" data-movie="Batman Begins">Batman Begins</button>
+          <button type="button" class="chip" data-movie="The Avengers">The Avengers</button>
+          <button type="button" class="chip" data-movie="Inception">Inception</button>
+        </div>
+      </header>
+
+      <section class="results" id="results" aria-live="polite">
+        <!-- ticket stubs injected here by script.js -->
+      </section>
+
+      <p class="status" id="status" role="status"></p>
+
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

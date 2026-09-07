@@ -1,0 +1,314 @@
+/* ============================================================
+   Now Screening — a cinema marquee themed recommender UI
+   ============================================================ */
+
+:root {
+  --bg: #10151c;
+  --bg-stub: #161d26;
+  --cream: #f4efe6;
+  --cream-dim: rgba(244, 239, 230, 0.66);
+  --cream-faint: rgba(244, 239, 230, 0.14);
+  --gold: #d9a441;
+  --gold-dim: rgba(217, 164, 65, 0.5);
+  --red: #9c2b2b;
+  --red-bright: #c23a3a;
+  --ink: #1c1710;
+
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius-window: 22px 22px 8px 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--sans);
+  line-height: 1.5;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- outer frame + marquee bulbs ---------- */
+
+.marquee-frame {
+  min-height: 100vh;
+  border: 1px solid var(--cream-faint);
+  margin: 18px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bulb-row {
+  height: 16px;
+  background-image: radial-gradient(circle, var(--gold) 2.4px, transparent 3px);
+  background-size: 30px 16px;
+  background-position: 15px center;
+  opacity: 0;
+  animation: bulbs-on 1.1s ease-out 0.15s forwards;
+}
+
+@keyframes bulbs-on {
+  to {
+    opacity: 0.85;
+  }
+}
+
+/* ---------- hero ---------- */
+
+.house {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 72px 24px 96px;
+}
+
+.hero {
+  text-align: center;
+}
+
+.showtime {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 0 0 8px;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin: 0 0 20px;
+  color: var(--cream);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: var(--cream-dim);
+  max-width: 42ch;
+  margin: 0 auto 40px;
+}
+
+/* ---------- box-office ticket window (search form) ---------- */
+
+.ticket-window {
+  display: flex;
+  max-width: 480px;
+  margin: 0 auto;
+  border-radius: var(--radius-window);
+  background: var(--cream);
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+#movie-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--ink);
+  padding: 14px 16px;
+  min-width: 0;
+}
+
+#movie-input:focus {
+  outline: none;
+}
+
+#movie-input::placeholder {
+  color: rgba(28, 23, 16, 0.45);
+}
+
+#search-btn {
+  border: none;
+  border-radius: 16px 16px 6px 6px;
+  background: var(--red);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0 22px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+#search-btn:hover {
+  background: var(--red-bright);
+}
+
+#movie-input:focus-visible,
+#search-btn:focus-visible,
+.chip:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ---------- "try one of these" chips ---------- */
+
+.try-row {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: var(--cream-dim);
+}
+
+.chip {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--cream);
+  background: transparent;
+  border: 1px dashed var(--gold-dim);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.chip:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ---------- results: ticket stubs ---------- */
+
+.results {
+  margin-top: 64px;
+  display: grid;
+  gap: 14px;
+}
+
+.stub {
+  position: relative;
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  align-items: center;
+  background: var(--bg-stub);
+  border: 1px solid var(--cream-faint);
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: rise 0.4s ease-out forwards;
+}
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stub-index {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  color: var(--gold-dim);
+  text-align: center;
+  padding: 18px 0;
+  position: relative;
+}
+
+/* perforation: dashed tear line with cut-out notches, like a real ticket */
+.stub-index::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-right: 2px dashed var(--cream-faint);
+}
+
+.stub-index::before {
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  bottom: -8px;
+  width: 16px;
+  background:
+    radial-gradient(circle 8px at 100% 0, var(--bg) 8px, transparent 8.5px),
+    radial-gradient(circle 8px at 100% 100%, var(--bg) 8px, transparent 8.5px);
+}
+
+.stub-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--cream);
+  padding: 16px 22px;
+}
+
+/* ---------- status line ---------- */
+
+.status {
+  text-align: center;
+  margin-top: 28px;
+  color: var(--cream-dim);
+  font-size: 0.95rem;
+  min-height: 1.4em;
+}
+
+.status.is-error {
+  color: var(--red-bright);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 560px) {
+  .house {
+    padding: 48px 16px 72px;
+  }
+
+  .ticket-window {
+    flex-direction: column;
+    border-radius: 18px;
+  }
+
+  #search-btn {
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  .stub {
+    grid-template-columns: 56px 1fr;
+  }
+
+  .stub-title {
+    font-size: 1.05rem;
+    padding: 14px 16px;
+  }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .bulb-row,
+  .stub {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
